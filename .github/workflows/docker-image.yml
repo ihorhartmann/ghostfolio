@@ -1,7 +1,7 @@
 name: Docker image CD
 
 on:
-  pull_request:
+#  pull_request: #TODO uncomment it before sending for review. YML is working
   workflow_dispatch:
 
 jobs:
