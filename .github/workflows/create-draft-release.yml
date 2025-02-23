@@ -4,7 +4,10 @@ on:
   push:
     tags:
       - 'v*.*.*'  # Tags that match the v0.1.9 format (e.g. v1.2.3)
-
+      
+permissions:
+  contents: write
+  
 jobs:
   create_release:
     runs-on: ubuntu-latest
