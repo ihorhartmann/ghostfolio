@@ -19,7 +19,6 @@ COPY ./package.json package.json
 COPY ./package-lock.json package-lock.json
 COPY ./prisma/schema.prisma prisma/schema.prisma
 
-RUN rm -rf node_modules package-lock.json
 RUN npm install
 
 # See https://github.com/nrwl/nx/issues/6586 for further details
