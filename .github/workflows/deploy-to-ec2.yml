@@ -24,9 +24,9 @@ jobs:
           echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ${{ env.SSH_KEY_PATH }}
           chmod 400 ${{ env.SSH_KEY_PATH }}
 
-      - name: Copy docker-compose.yml to EC2 instance
-        run: |
-          scp -i ${{ env.SSH_KEY_PATH }} docker/docker-compose.yml ec2-user@${{ secrets.EC2_URL }}:/home/ec2-user/app/
+#      - name: Copy docker-compose.yml to EC2 instance
+#        run: |
+#          scp -i ${{ env.SSH_KEY_PATH }} docker/docker-compose.yml ec2-user@${{ secrets.EC2_URL }}:/home/ec2-user/app/
 
       - name: Restart Docker Compose
         run: |
