@@ -31,9 +31,6 @@ jobs:
           REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
           DEFAULT_IMAGE_TAG: ${{ github.sha }}
         run: |
-          echo $REGISTRY
-          echo $REPOSITORY
-          echo $DEFAULT_IMAGE_TAG
           docker build -t $REGISTRY/$REPOSITORY:$DEFAULT_IMAGE_TAG -f Dockerfile .
 
       - name: Push Docker image
