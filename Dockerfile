@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-suggests \
 COPY ./CHANGELOG.md CHANGELOG.md
 COPY ./LICENSE LICENSE
 COPY ./package.json package.json
-#COPY ./package-lock.json package-lock.json
+COPY ./package-lock.json package-lock.json
 COPY ./prisma/schema.prisma prisma/schema.prisma
 
 RUN npm install
@@ -33,7 +33,7 @@ COPY ./nx.json nx.json
 COPY ./replace.build.mjs replace.build.mjs
 COPY ./tsconfig.base.json tsconfig.base.json
 
-RUN npm run build:production --verbose --progress plain
+RUN npm run build
 
 # Prepare the dist image with additional node_modules
 WORKDIR /ghostfolio/dist/apps/api
