@@ -9,6 +9,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      SSH_KEY_PATH: /tmp/ssh_key
 
     steps:
       - name: Checkout Terraform repository
@@ -17,9 +19,14 @@ jobs:
           repository: ihorhartmann/3.2.4-Getting-started-with-EC2
           token: ${{ secrets.INFRASTRUCTURE_REPO_TOKEN }}
 
+      - name: Create SSH private key file
+        run: |
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ${{ env.SSH_KEY_PATH }}
+          chmod 600 ${{ env.SSH_KEY_PATH }}
+
       - name: Copy docker-compose.yml to EC2 instance
         run: |
-          scp -i ${{ secrets.EC2_SSH_PRIVATE_KEY }} docker/docker-compose.yml ec2-user@${{ secrets.EC2_URL }}:/home/ec2-user/app/
+          scp -i ${{ env.SSH_KEY_PATH }} docker/docker-compose.yml ec2-user@${{ secrets.EC2_URL }}:/home/ec2-user/app/
 
       - name: Restart Docker Compose
         run: |
@@ -27,3 +34,8 @@ jobs:
             cd /home/ec2-user/app/
             ls
           EOF
+
+      - name: Remove SSH private key file
+        if: always()
+        run: |
+          rm -f ${{ env.SSH_KEY_PATH }}
