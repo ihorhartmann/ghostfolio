@@ -30,9 +30,9 @@ jobs:
           ssh-keyscan -H ${{ secrets.EC2_URL }} >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
-      #      - name: Copy docker-compose.yml to EC2 instance
-      #        run: |
-      #          scp -i ${{ env.SSH_KEY_PATH }} docker/docker-compose.yml ec2-user@${{ secrets.EC2_URL }}:/home/ec2-user/app/
+      - name: Copy docker-compose.yml to EC2 instance
+        run: |
+          scp -i ${{ env.SSH_KEY_PATH }} docker/docker-compose.yml ec2-user@${{ secrets.EC2_URL }}:/home/ec2-user/
 
       - name: Restart Docker Compose
         run: |
