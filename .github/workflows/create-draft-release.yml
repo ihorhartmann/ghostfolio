@@ -21,6 +21,8 @@ jobs:
 
       - name: Create Draft Release
         uses: softprops/action-gh-release@v1
+        with:
+          draft: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ env.VERSION }}
