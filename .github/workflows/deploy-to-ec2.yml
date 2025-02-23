@@ -30,7 +30,7 @@ jobs:
 
       - name: Restart Docker Compose
         run: |
-          ssh -i ${{ secrets.EC2_SSH_PRIVATE_KEY }} ec2-user@${{ secrets.EC2_URL }} << EOF
+          ssh -i ${{ env.SSH_KEY_PATH }} ec2-user@${{ secrets.EC2_URL }} << EOF
             cd /home/ec2-user/app/
             ls
           EOF
