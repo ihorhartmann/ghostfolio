@@ -1,0 +1,39 @@
+name: Deploy to EC2
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SSH_KEY_PATH: /tmp/ssh_key.pem
+
+    steps:
+      - name: Checkout Terraform repository
+        uses: actions/checkout@v2
+        with:
+          repository: ihorhartmann/3.2.4-Getting-started-with-EC2
+          token: ${{ secrets.INFRASTRUCTURE_REPO_TOKEN }}
+
+      - name: Create SSH private key file
+        run: |
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ${{ env.SSH_KEY_PATH }}
+          chmod 400 ${{ env.SSH_KEY_PATH }}
+
+      - name: Add EC2 host to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.EC2_URL }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Copy docker-compose.yml to EC2 instance
+        run: |
+          scp -i ${{ env.SSH_KEY_PATH }} docker/docker-compose.yml ec2-user@${{ secrets.EC2_URL }}:/home/ec2-user/app/
+
+      - name: Remove SSH private key file
+        if: always()
+        run: |
+          rm -f ${{ env.SSH_KEY_PATH }}
