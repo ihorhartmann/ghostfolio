@@ -33,13 +33,6 @@ jobs:
         run: |
           scp -i ${{ env.SSH_KEY_PATH }} docker/docker-compose.yml ec2-user@${{ secrets.EC2_URL }}:/home/ec2-user/
 
-      - name: Restart Docker Compose
-        run: |
-          ssh -i ${{ env.SSH_KEY_PATH }} ec2-user@${{ secrets.EC2_URL }} << EOF
-            cd /home/ec2-user/app/
-            docker compose up -d
-          EOF
-
       - name: Remove SSH private key file
         if: always()
         run: |
