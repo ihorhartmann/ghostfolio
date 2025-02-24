@@ -31,7 +31,7 @@ jobs:
 
       - name: Copy docker-compose.yml to EC2 instance
         run: |
-          scp -i ${{ env.SSH_KEY_PATH }} docker/docker-compose.yml ec2-user@${{ secrets.EC2_URL }}:/home/ec2-user/
+          scp -i ${{ env.SSH_KEY_PATH }} docker/docker-compose.yml ec2-user@${{ secrets.EC2_URL }}:/home/ec2-user/app/
 
       - name: Remove SSH private key file
         if: always()
