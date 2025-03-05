@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-suggests \
   python3 \
   && rm -rf /var/lib/apt/lists/*
 
-# Only add basic files without the application itself to avoid rebuilding
+# Only add basic files without the application itself to avoid rebuilding ()
 # layers when files (package.json etc.) have not changed
 COPY ./CHANGELOG.md CHANGELOG.md
 COPY ./LICENSE LICENSE
